@@ -1,14 +1,12 @@
 package java.com.pieisspy.tablefortress.model.pieces;
 
-import java.com.pieisspy.tablefortress.model.Board;
 import java.com.pieisspy.tablefortress.model.components.Position;
 import java.com.pieisspy.tablefortress.model.components.Stats;
 
 public abstract class Piece {
-    public Piece(Stats stat, Position pos, Board board) {
+    public Piece(Stats stat, Position pos) {
         STATS = stat;
         POSITION = pos;
-        BOARD_REFERENCE = board;
     }
 
     public Stats getStats() {
@@ -21,5 +19,4 @@ public abstract class Piece {
 
     private final Stats STATS;
     private final Position POSITION;
-    private final Board BOARD_REFERENCE;
 }
