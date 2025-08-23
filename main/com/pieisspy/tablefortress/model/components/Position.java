@@ -1,4 +1,4 @@
-package java.com.pieisspy.tablefortress.model.components;
+package main.com.pieisspy.tablefortress.model.components;
 
 public class Position {
     public Position(int r, int c) {
@@ -20,6 +20,10 @@ public class Position {
 
     public void setCol(int c) {
         col = c;
+    }
+
+    public String toString() {
+        return "(" + row + ", " + col + ")";
     }
 
     private int row;

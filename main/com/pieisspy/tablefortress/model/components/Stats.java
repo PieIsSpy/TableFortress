@@ -1,4 +1,4 @@
-package java.com.pieisspy.tablefortress.model.components;
+package main.com.pieisspy.tablefortress.model.components;
 
 public class Stats {
     public Stats(int h, int ad, int ar, int p, int m) {
