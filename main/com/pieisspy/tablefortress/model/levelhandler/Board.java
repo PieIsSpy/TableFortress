@@ -1,6 +1,6 @@
-package main.com.pieisspy.tablefortress.model;
+package main.com.pieisspy.tablefortress.model.levelhandler;
 
-import main.com.pieisspy.tablefortress.model.comparators.CooldownComparator;
+import main.com.pieisspy.tablefortress.model.components.PieceHolder;
 import main.com.pieisspy.tablefortress.model.components.Position;
 import main.com.pieisspy.tablefortress.model.pieces.Piece;
 import main.com.pieisspy.tablefortress.model.pieces.Wall;
@@ -12,19 +12,19 @@ public class Board {
         TILES = new Piece[r][c];
         ROWS = r;
         COLS = c;
-        COOLDOWN_HOLDER = new PriorityQueue<>(new CooldownComparator());
-        TURNS = new LinkedList<>();
+        COOLDOWN_HOLDER = new PieceHolder();
+        TURNS = new PieceHolder();
     }
 
     public Piece[][] getTiles() {
         return TILES;
     }
 
-    public PriorityQueue<Piece> getCooldownHolder() {
+    public PieceHolder getCooldownHolder() {
         return COOLDOWN_HOLDER;
     }
 
-    public Queue<Piece> getTurns() {
+    public PieceHolder getTurns() {
         return TURNS;
     }
 
@@ -62,12 +62,12 @@ public class Board {
         int c = p.getPosition().getCol();
 
         TILES[r][c] = p;
-        TURNS.add(p);
+        TURNS.getHolder().add(p);
     }
 
     private final Piece[][] TILES;
-    private final PriorityQueue<Piece> COOLDOWN_HOLDER;
-    private final Queue<Piece> TURNS;
+    private final PieceHolder COOLDOWN_HOLDER;
+    private final PieceHolder TURNS;
     private final int ROWS;
     private final int COLS;
 }

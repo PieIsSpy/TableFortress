@@ -1,4 +1,4 @@
-package main.com.pieisspy.tablefortress.model;
+package main.com.pieisspy.tablefortress.model.levelhandler;
 
 public class Level {
     public Level(int l) {

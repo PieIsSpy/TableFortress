@@ -1,12 +1,16 @@
 package main.com.pieisspy.tablefortress.model.logics;
 
-import main.com.pieisspy.tablefortress.model.Board;
+import main.com.pieisspy.tablefortress.model.levelhandler.Board;
 import main.com.pieisspy.tablefortress.model.components.Position;
 import main.com.pieisspy.tablefortress.model.pieces.Piece;
 
 public class PlayerTurn {
     public void attackMove(Board b, Piece p, Position pos) {
         b.getTiles()[pos.getRow()][pos.getCol()].takeDamage(p.getStats().getAttackDamage());
+    }
+
+    public void healMove(Board b, Piece p, Position pos) {
+        b.getTiles()[pos.getRow()][pos.getCol()].healHealth(p.getStats().getAttackDamage());
     }
 
     public void positionMove(Board b, Piece p, Position pos) {

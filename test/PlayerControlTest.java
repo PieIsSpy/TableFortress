@@ -1,14 +1,14 @@
 package test;
 
-import main.com.pieisspy.tablefortress.model.Board;
+import main.com.pieisspy.tablefortress.model.levelhandler.Board;
 import main.com.pieisspy.tablefortress.model.components.Position;
 import main.com.pieisspy.tablefortress.model.logics.BoardPopulator;
 import main.com.pieisspy.tablefortress.model.logics.PlayerTurn;
 import main.com.pieisspy.tablefortress.model.logics.RangeChecker;
 import main.com.pieisspy.tablefortress.model.logics.TurnHandler;
 import main.com.pieisspy.tablefortress.model.pieces.Piece;
-import main.com.pieisspy.tablefortress.model.pieces.Scout;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.Scanner;
@@ -57,10 +57,10 @@ public class PlayerControlTest {
         }
     }
 
-    public static void viewQueue(Queue<Piece> turns) {
+    public static void viewQueue(ArrayList<Piece> turns) {
         Iterator<Piece> it = turns.iterator();
-        System.out.println("Current: " + it.next());
-        System.out.println("Next: " + it.next());
+        System.out.println("Current: " + it.next().toString());
+        System.out.println("Next: " + it.next().toString());
     }
 
     public static void main(String[] args) {
@@ -74,41 +74,39 @@ public class PlayerControlTest {
         Position pos;
         Scanner input = new Scanner(System.in);
         RangeChecker range = new RangeChecker();
-        //String command;
+        String command;
         int row, col;
 
         TurnHandler turnHandler = new TurnHandler();
+        turnHandler.sortPrecedence(board.getTurns().getHolder());
 
         do {
-            p = board.getTurns().peek();
+            p = board.getTurns().getHolder().getFirst();
 
             if (p != null) {
                 displayBoard(p, board);
-                viewQueue(board.getTurns());
+                viewQueue(board.getTurns().getHolder());
                 System.out.println("pos: " + p.getPosition());
-                /*
                 System.out.print("command: ");
                 command = input.nextLine();
 
-                 */
-
-                //if (!command.equalsIgnoreCase("stop")) {
+                if (command.equalsIgnoreCase("move")) {
                     System.out.print("new row: ");
                     row = input.nextInt();
                     System.out.print("new col: ");
                     col = input.nextInt();
-                    //input.nextLine();
+                    input.nextLine();
 
                     pos = new Position(row, col);
                     if (board.isValidTile(pos) && board.isEmptyTile(pos) && range.manhattanCheck(p.getPosition(), pos, p.getStats().getMovementRange()))
                         player.positionMove(board, p, new Position(row, col));
                     else
                         System.out.println("invalid");
-                //}
+                }
 
-                if (!board.getTurns().isEmpty())
-                    turnHandler.rotateTurns(board.getTurns());
+                if (!board.getTurns().getHolder().isEmpty())
+                    turnHandler.rotateTurns(board.getTurns().getHolder());
             }
-        } while (!board.getTurns().isEmpty());
+        } while (!board.getTurns().getHolder().isEmpty());
     }
 }

@@ -1,6 +1,6 @@
 package main.com.pieisspy.tablefortress.model.logics;
 
-import main.com.pieisspy.tablefortress.model.Board;
+import main.com.pieisspy.tablefortress.model.levelhandler.Board;
 import main.com.pieisspy.tablefortress.model.components.Position;
 import main.com.pieisspy.tablefortress.model.enumerators.Owners;
 import main.com.pieisspy.tablefortress.model.pieces.*;

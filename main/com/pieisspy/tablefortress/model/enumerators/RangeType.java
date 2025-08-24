@@ -2,5 +2,6 @@ package main.com.pieisspy.tablefortress.model.enumerators;
 
 public enum RangeType {
     Linear,
-    Manhattan
+    Manhattan,
+    Square
 }
