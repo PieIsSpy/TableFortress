@@ -5,12 +5,14 @@ import main.com.pieisspy.tablefortress.model.components.Position;
 import main.com.pieisspy.tablefortress.model.pieces.Piece;
 
 public class PlayerTurn {
-    public void attackMove(Board b, Piece p, Position pos) {
-        b.getTiles()[pos.getRow()][pos.getCol()].takeDamage(p.getStats().getAttackDamage());
+    public void attackMove(Piece piece, Piece target) {
+        target.takeDamage(piece.getStats().getAttackDamage());
+        piece.getCooldown().setCounter(piece.getCooldown().getCooldown());
     }
 
-    public void healMove(Board b, Piece p, Position pos) {
-        b.getTiles()[pos.getRow()][pos.getCol()].healHealth(p.getStats().getAttackDamage());
+    public void healMove(Piece piece, Piece target) {
+        target.healHealth(piece.getStats().getAttackDamage());
+        piece.getCooldown().setCounter(piece.getCooldown().getCooldown());
     }
 
     public void positionMove(Board b, Piece p, Position pos) {

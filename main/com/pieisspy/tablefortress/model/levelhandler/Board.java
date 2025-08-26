@@ -2,6 +2,7 @@ package main.com.pieisspy.tablefortress.model.levelhandler;
 
 import main.com.pieisspy.tablefortress.model.components.PieceHolder;
 import main.com.pieisspy.tablefortress.model.components.Position;
+import main.com.pieisspy.tablefortress.model.enumerators.Owners;
 import main.com.pieisspy.tablefortress.model.pieces.Piece;
 import main.com.pieisspy.tablefortress.model.pieces.Wall;
 
@@ -63,6 +64,30 @@ public class Board {
 
         TILES[r][c] = p;
         TURNS.getHolder().add(p);
+    }
+
+    public int countTeamPieces(Owners owner) {
+        int turns = 0;
+        int cooldowns = 0;
+
+        for (Piece p : TURNS.getHolder())
+            if (p.getOwner() == owner)
+                turns++;
+
+        for (Piece p : COOLDOWN_HOLDER.getHolder())
+            if (p.getOwner() == owner)
+                turns++;
+
+        return turns + cooldowns;
+    }
+
+    public void removeDeadPieces() {
+        int i, j;
+
+        for (i = 0; i < ROWS; i++)
+            for (j = 0; j < COLS; j++)
+                if (TILES[i][j] != null && !TILES[i][j].isAlive())
+                    TILES[i][j] = null;
     }
 
     private final Piece[][] TILES;

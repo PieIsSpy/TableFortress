@@ -88,7 +88,7 @@ public abstract class Piece {
     }
 
     public String toString() {
-        return "(" + STATS.getPrecedence() + ")" + type + ": " + owner;
+        return "(" + STATS.getHealth() + "/" + STATS.getMaxHealth() + ")" + type + ": " + owner;
     }
 
     private final Stats STATS;

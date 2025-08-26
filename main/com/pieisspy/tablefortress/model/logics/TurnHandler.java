@@ -21,8 +21,10 @@ public class TurnHandler {
     public void placeOnCooldown(ArrayList<Piece> turns, ArrayList<Piece> cooldown) {
         Piece temp = turns.getFirst();
         turns.removeFirst();
-        if (temp != null)
+        if (temp != null) {
             cooldown.add(temp);
+            sortCooldown(cooldown);
+        }
     }
 
     public void removeCooldown(ArrayList<Piece> turns, ArrayList<Piece> cooldown) {
@@ -35,6 +37,11 @@ public class TurnHandler {
         }
     }
 
+    public void decrementCooldowns(ArrayList<Piece> cooldown) {
+        for (Piece p : cooldown)
+            p.getCooldown().decrementCounter();
+    }
+
     public void rotateTurns(ArrayList<Piece> turns) {
         Piece temp;
         temp = turns.getFirst();
@@ -43,5 +50,10 @@ public class TurnHandler {
             turns.removeFirst();
             turns.add(temp);
         }
+    }
+
+    public void removeDeadPieces(ArrayList<Piece> turns, ArrayList<Piece> cooldown) {
+        turns.removeIf(p -> !p.isAlive());
+        cooldown.removeIf(p -> !p.isAlive());
     }
 }
