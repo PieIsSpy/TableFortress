@@ -30,4 +30,8 @@ public class RangeChecker {
         else
             return squareCheck(pos, target, range);
     }
+
+    public int manhattanDistance(Position pos, Position target) {
+        return Math.abs(pos.getCol() - target.getCol()) + Math.abs(pos.getRow() - target.getRow());
+    }
 }

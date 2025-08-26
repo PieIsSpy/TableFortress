@@ -1,5 +1,6 @@
 package main.com.pieisspy.tablefortress.model.levelhandler;
 
+import main.com.pieisspy.tablefortress.model.components.Position;
 import main.com.pieisspy.tablefortress.model.enumerators.Moves;
 import main.com.pieisspy.tablefortress.model.enumerators.Owners;
 import main.com.pieisspy.tablefortress.model.logics.BoardPopulator;
@@ -24,18 +25,27 @@ public class Level {
         return LEVEL_NUM;
     }
 
-    public void promptPlayerMove() {
+    public void promptPlayerMove(Piece piece, Position target) {
+        PlayerTurn playerTurn = new PlayerTurn();
         TurnHandler turnHandler = new TurnHandler();
+
+        playerTurn.positionMove(board, piece, target);
         turnHandler.rotateTurns(board.getTurns().getHolder());
     }
 
-    public void promptPlayerAttack() {
+    public void promptPlayerAttack(Piece piece, Piece target) {
+        PlayerTurn playerTurn = new PlayerTurn();
         TurnHandler turnHandler = new TurnHandler();
+
+        playerTurn.attackMove(piece, target);
         turnHandler.placeOnCooldown(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
     }
 
-    public void promptPlayerHeal() {
+    public void promptPlayerHeal(Piece piece, Piece target) {
+        PlayerTurn playerTurn = new PlayerTurn();
         TurnHandler turnHandler = new TurnHandler();
+
+        playerTurn.healMove(piece, target);
         turnHandler.placeOnCooldown(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
     }
 

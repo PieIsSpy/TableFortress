@@ -4,7 +4,8 @@ import main.com.pieisspy.tablefortress.model.enumerators.Moves;
 import main.com.pieisspy.tablefortress.model.levelhandler.Board;
 import main.com.pieisspy.tablefortress.model.components.Position;
 import main.com.pieisspy.tablefortress.model.pieces.Piece;
-import main.com.pieisspy.tablefortress.model.pieces.Volatile;
+
+import java.util.ArrayList;
 
 public class EnemyTurn extends PlayerTurn{
     public Moves enemyDecision(Board b, Piece p) {
@@ -13,9 +14,10 @@ public class EnemyTurn extends PlayerTurn{
         double x = Math.random();
         Position random;
 
-        // if the piece can find a nearby piece and rng gods allows them to beat up shit
-        if (nearestEnemy != null && x > .5f) {
+        // if the piece can find a nearby piece and random > 50%
+        if (nearestEnemy != null && rangeChecker.hybridCheck(p.getPosition(), nearestEnemy.getPosition(), p.getStats().getAttackRange(), p.getAttackRangeType())) {
             attackMove(p, nearestEnemy);
+            System.out.println(p + " attacked " + nearestEnemy);
             return Moves.Attack;
         }
         // else, move randomly
@@ -25,6 +27,7 @@ public class EnemyTurn extends PlayerTurn{
             } while (!b.isEmptyTile(random));
 
             positionMove(b, p, random);
+            System.out.println(p + " moved to " + random);
             return Moves.Move;
         }
     }
@@ -33,7 +36,31 @@ public class EnemyTurn extends PlayerTurn{
         for finding out which piece is in the attack area
      */
     public Piece seekNearestEnemy(Board b, Piece p) {
-        return null;
+        RangeChecker rangeChecker = new RangeChecker();
+        int nearestDistance = 999;
+        Piece nearest = null;
+        ArrayList<Piece> cooldowns = b.getCooldownHolder().getHolder();
+        ArrayList<Piece> turns = b.getTurns().getHolder();
+
+        for (Piece found : cooldowns) {
+            if (p != found && found.getOwner() != p.getOwner()) {
+                if (nearestDistance > rangeChecker.manhattanDistance(p.getPosition(), found.getPosition())) {
+                    nearest = found;
+                    nearestDistance = rangeChecker.manhattanDistance(p.getPosition(), found.getPosition());
+                }
+            }
+        }
+
+        for (Piece found : turns) {
+            if (p != found && found.getOwner() != p.getOwner()) {
+                if (nearestDistance > rangeChecker.manhattanDistance(p.getPosition(), found.getPosition())) {
+                    nearest = found;
+                    nearestDistance = rangeChecker.manhattanDistance(p.getPosition(), found.getPosition());
+                }
+            }
+        }
+
+        return nearest;
     }
 
     public Position randomizePosition(int maxRows, int maxCols) {

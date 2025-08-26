@@ -90,6 +90,10 @@ public class Board {
                     TILES[i][j] = null;
     }
 
+    public Piece getPiece(Position pos) {
+        return TILES[pos.getRow()][pos.getCol()];
+    }
+
     private final Piece[][] TILES;
     private final PieceHolder COOLDOWN_HOLDER;
     private final PieceHolder TURNS;

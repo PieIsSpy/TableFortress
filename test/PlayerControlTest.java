@@ -1,12 +1,10 @@
 package test;
 
+import main.com.pieisspy.tablefortress.model.enumerators.Moves;
 import main.com.pieisspy.tablefortress.model.enumerators.Owners;
 import main.com.pieisspy.tablefortress.model.levelhandler.Board;
 import main.com.pieisspy.tablefortress.model.components.Position;
-import main.com.pieisspy.tablefortress.model.logics.BoardPopulator;
-import main.com.pieisspy.tablefortress.model.logics.PlayerTurn;
-import main.com.pieisspy.tablefortress.model.logics.RangeChecker;
-import main.com.pieisspy.tablefortress.model.logics.TurnHandler;
+import main.com.pieisspy.tablefortress.model.logics.*;
 import main.com.pieisspy.tablefortress.model.pieces.Piece;
 import main.com.pieisspy.tablefortress.model.pieces.Scout;
 import main.com.pieisspy.tablefortress.model.pieces.Spawn;
@@ -105,71 +103,83 @@ public class PlayerControlTest {
 
         Piece p;
         PlayerTurn player = new PlayerTurn();
+        EnemyTurn enemy = new EnemyTurn();
+        Moves decision;
         Position pos;
         Scanner input = new Scanner(System.in);
         RangeChecker range = new RangeChecker();
         String command;
         int row, col;
+        boolean isAttack;
 
         TurnHandler turnHandler = new TurnHandler();
         turnHandler.sortPrecedence(board.getTurns().getHolder());
 
         do {
             p = board.getTurns().getHolder().getFirst();
+            isAttack = false;
 
             if (p != null) {
-                displayBoard(p, board);
-                viewQueue(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
-                System.out.println("player: " + board.countTeamPieces(Owners.Player));
-                System.out.println("enemy: " + board.countTeamPieces(Owners.Enemy));
-                System.out.println("pos: " + p.getPosition());
-                System.out.println("move or fight");
-                System.out.print("command: ");
-                command = input.nextLine();
+                if (p.getOwner() == Owners.Player) {
+                    displayBoard(p, board);
+                    viewQueue(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
+                    System.out.println("player: " + board.countTeamPieces(Owners.Player));
+                    System.out.println("enemy: " + board.countTeamPieces(Owners.Enemy));
+                    System.out.println("pos: " + p.getPosition());
+                    System.out.println("move or fight");
+                    System.out.print("command: ");
+                    command = input.nextLine();
 
-                if (command.equalsIgnoreCase("move")) {
-                    System.out.print("new row: ");
-                    row = input.nextInt();
-                    System.out.print("new col: ");
-                    col = input.nextInt();
-                    input.nextLine();
+                    if (command.equalsIgnoreCase("move")) {
+                        System.out.print("new row: ");
+                        row = input.nextInt();
+                        System.out.print("new col: ");
+                        col = input.nextInt();
+                        input.nextLine();
 
-                    pos = new Position(row, col);
-                    if (board.isValidTile(pos) && board.isEmptyTile(pos) && range.hybridCheck(p.getPosition(), pos, p.getStats().getMovementRange(), p.getMovementRangeType())) {
-                        player.positionMove(board, p, pos);
-                        System.out.println("moved to " + pos);
+                        pos = new Position(row, col);
+                        if (board.isValidTile(pos) && board.isEmptyTile(pos) && range.hybridCheck(p.getPosition(), pos, p.getStats().getMovementRange(), p.getMovementRangeType())) {
+                            player.positionMove(board, p, pos);
+                            System.out.println("moved to " + pos);
+                        } else
+                            System.out.println("invalid");
+                    } else if (command.equalsIgnoreCase("fight")) {
+                        System.out.print("new row: ");
+                        row = input.nextInt();
+                        System.out.print("new col: ");
+                        col = input.nextInt();
+                        input.nextLine();
+
+                        pos = new Position(row, col);
+                        if (board.isValidTile(pos) && !board.isEmptyTile(pos) && range.hybridCheck(p.getPosition(), pos, p.getStats().getAttackRange(), p.getAttackRangeType())) {
+                            player.attackMove(p, board.getTiles()[row][col]);
+                            System.out.println("attacked " + board.getTiles()[row][col]);
+                            isAttack = true;
+                        } else
+                            System.out.println("invalid");
                     }
-                    else
-                        System.out.println("invalid");
                 }
-                else if (command.equalsIgnoreCase("fight")) {
-                    System.out.print("new row: ");
-                    row = input.nextInt();
-                    System.out.print("new col: ");
-                    col = input.nextInt();
-                    input.nextLine();
+                else {
+                    decision = enemy.enemyDecision(board, p);
 
-                    pos = new Position(row, col);
-                    if (board.isValidTile(pos) && !board.isEmptyTile(pos) && range.hybridCheck(p.getPosition(), pos, p.getStats().getAttackRange(), p.getAttackRangeType())) {
-                        player.attackMove(p, board.getTiles()[row][col]);
-                        //turnHandler.placeOnCooldown(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
-                        System.out.println("attacked " + board.getTiles()[row][col]);
-                    }
-                    else
-                        System.out.println("invalid");
+                    if (decision == Moves.Attack)
+                        isAttack = true;
                 }
 
                 board.removeDeadPieces();
                 turnHandler.removeDeadPieces(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
-                /*
+
                 if (!board.getCooldownHolder().getHolder().isEmpty()) {
                     turnHandler.decrementCooldowns(board.getCooldownHolder().getHolder());
                     turnHandler.removeCooldown(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
                 }
-                if (!board.getTurns().getHolder().isEmpty())
-                    turnHandler.rotateTurns(board.getTurns().getHolder());
 
-                 */
+                if (!board.getTurns().getHolder().isEmpty()) {
+                    if (isAttack && p.getCooldown().getCooldown() != 0)
+                        turnHandler.placeOnCooldown(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
+                    else
+                        turnHandler.rotateTurns(board.getTurns().getHolder());
+                }
             }
         } while (!board.getTurns().getHolder().isEmpty());
     }

@@ -30,7 +30,7 @@ public class TurnHandler {
     public void removeCooldown(ArrayList<Piece> turns, ArrayList<Piece> cooldown) {
         Piece temp;
 
-        while (!cooldown.isEmpty() && cooldown.getFirst().getCooldown().getCounter() == 0) {
+        while (!cooldown.isEmpty() && cooldown.getFirst().getCooldown().getCounter() < 1) {
             temp = cooldown.getFirst();
             cooldown.removeFirst();
             turns.add(temp);
