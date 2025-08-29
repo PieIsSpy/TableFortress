@@ -12,54 +12,61 @@ import main.com.pieisspy.tablefortress.model.pieces.Piece;
 public class Level {
     public Level(int l) {
         LEVEL_NUM = l;
-        board = new Board(10,10);
+        board = new Board(12,12);
         init();
     }
 
     public void init() {
-        BoardPopulator boardPopulator = new BoardPopulator();
-        boardPopulator.populateBoard(board);
+        BoardPopulator.populateBoard(board);
+        TurnHandler.sortPrecedence(board.getTurns());
     }
 
     public int getLevelNum() {
         return LEVEL_NUM;
     }
 
-    public void promptPlayerMove(Piece piece, Position target) {
-        PlayerTurn playerTurn = new PlayerTurn();
-        TurnHandler turnHandler = new TurnHandler();
+    public Board getBoard() {
+        return board;
+    }
 
-        playerTurn.positionMove(board, piece, target);
-        turnHandler.rotateTurns(board.getTurns().getHolder());
+    public void promptPlayerMove(Piece piece, Position target) {
+        PlayerTurn.positionMove(board, piece, target);
+        postTurn();
+        TurnHandler.rotateTurns(board.getTurns());
     }
 
     public void promptPlayerAttack(Piece piece, Piece target) {
-        PlayerTurn playerTurn = new PlayerTurn();
-        TurnHandler turnHandler = new TurnHandler();
-
-        playerTurn.attackMove(piece, target);
-        turnHandler.placeOnCooldown(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
-    }
-
-    public void promptPlayerHeal(Piece piece, Piece target) {
-        PlayerTurn playerTurn = new PlayerTurn();
-        TurnHandler turnHandler = new TurnHandler();
-
-        playerTurn.healMove(piece, target);
-        turnHandler.placeOnCooldown(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
+        PlayerTurn.attackMove(piece, target);
+        postTurn();
+        if (board.getTurns().getHolder().getFirst().getCooldown().getCooldown() > 0)
+            TurnHandler.placeOnCooldown(board.getTurns(), board.getCooldownHolder());
+        else
+            TurnHandler.rotateTurns(board.getTurns());
     }
 
     public void promptEnemyTurn() {
         Moves move;
-        EnemyTurn enemyTurn = new EnemyTurn();
-        TurnHandler turnHandler = new TurnHandler();
         Piece piece = board.getTurns().getHolder().getFirst();
-        move = enemyTurn.enemyDecision(board, piece);
+        move = EnemyTurn.enemyDecision(board, piece);
 
-        if (move == Moves.Move)
-            turnHandler.rotateTurns(board.getTurns().getHolder());
-        else
-            turnHandler.placeOnCooldown(board.getTurns().getHolder(), board.getCooldownHolder().getHolder());
+        if (move == Moves.Move) {
+            postTurn();
+            TurnHandler.rotateTurns(board.getTurns());
+        }
+        else {
+            postTurn();
+            if (board.getTurns().getHolder().getFirst().getCooldown().getCooldown() > 0)
+                TurnHandler.placeOnCooldown(board.getTurns(), board.getCooldownHolder());
+            else
+                TurnHandler.rotateTurns(board.getTurns());
+        }
+    }
+
+    public void postTurn() {
+        TurnHandler.removeDeadPieces(board.getTurns(), board.getCooldownHolder());
+        board.removeDeadPieces();
+        TurnHandler.decrementCooldowns(board.getCooldownHolder());
+        TurnHandler.removeCooldown(board.getTurns(), board.getCooldownHolder());
     }
 
     public boolean isLevelWon() {
@@ -72,6 +79,10 @@ public class Level {
 
     public boolean isLevelDraw() {
         return board.countTeamPieces(Owners.Enemy) == 0 && board.countTeamPieces(Owners.Player) == 0;
+    }
+
+    public boolean isLevelOver() {
+        return isLevelWon() || isLevelLost() || isLevelDraw();
     }
 
     private final int LEVEL_NUM;

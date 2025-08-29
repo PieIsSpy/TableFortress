@@ -6,9 +6,7 @@ import main.com.pieisspy.tablefortress.model.levelhandler.Board;
 import main.com.pieisspy.tablefortress.model.logics.EnemyTurn;
 import main.com.pieisspy.tablefortress.model.logics.RangeChecker;
 import main.com.pieisspy.tablefortress.model.pieces.*;
-
-import java.util.ArrayList;
-
+/*
 public class ManhattanDistanceTest {
     public static void main(String[] args) {
         RangeChecker rangeChecker = new RangeChecker();
@@ -40,3 +38,4 @@ public class ManhattanDistanceTest {
         System.out.println(rangeChecker.hybridCheck(scout.getPosition(),nearest.getPosition(),scout.getStats().getAttackRange(),scout.getAttackRangeType()));
     }
 }
+*/

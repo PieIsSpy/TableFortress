@@ -28,6 +28,6 @@ public class Model {
         return levelNumProgress;
     }
 
-    public Level level;
-    public int levelNumProgress;
+    private Level level;
+    private int levelNumProgress;
 }

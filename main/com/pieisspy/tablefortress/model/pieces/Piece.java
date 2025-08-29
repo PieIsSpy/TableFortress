@@ -2,6 +2,7 @@ package main.com.pieisspy.tablefortress.model.pieces;
 
 import main.com.pieisspy.tablefortress.model.components.Cooldown;
 import main.com.pieisspy.tablefortress.model.components.Position;
+import main.com.pieisspy.tablefortress.model.components.Range;
 import main.com.pieisspy.tablefortress.model.components.Stats;
 import main.com.pieisspy.tablefortress.model.enumerators.Owners;
 import main.com.pieisspy.tablefortress.model.enumerators.PieceType;
@@ -46,20 +47,20 @@ public abstract class Piece {
         type = t;
     }
 
-    public RangeType getAttackRangeType() {
-        return attackRangeType;
+    public Range getAttackRange() {
+        return attackRange;
     }
 
-    public void setAttackRangeType(RangeType r) {
-        attackRangeType = r;
+    public void setAttackRange(Range r) {
+        attackRange = r;
     }
 
-    public RangeType getMovementRangeType() {
-        return movementRangeType;
+    public Range getMovementRange() {
+        return movementRange;
     }
 
-    public void setMovementRangeType(RangeType r) {
-        movementRangeType = r;
+    public void setMovementRange(Range r) {
+        movementRange = r;
     }
 
     public void takeDamage(int d) {
@@ -96,6 +97,6 @@ public abstract class Piece {
     private Position Position;
     private Owners owner;
     private PieceType type;
-    private RangeType attackRangeType;
-    private RangeType movementRangeType;
+    private Range attackRange;
+    private Range movementRange;
 }

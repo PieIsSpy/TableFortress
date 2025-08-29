@@ -7,8 +7,17 @@ public class Controller {
     public Controller(Model m, View v) {
         model = m;
         view = v;
+
+        menuController = new MenuController(model, view);
+        gameController = new GameController(model, view);
+
+        model.createLevel();
+        view.getGamePanel().getBoard().drawBoard(model.getLevel().getBoard().convertToTileMatrix(), null);
+        view.changePanel("game");
     }
 
-    private final Model model;
-    private final View view;
+    private Model model;
+    private View view;
+    private MenuController menuController;
+    private GameController gameController;
 }

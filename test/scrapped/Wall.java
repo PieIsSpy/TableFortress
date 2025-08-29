@@ -1,11 +1,14 @@
-package main.com.pieisspy.tablefortress.model.pieces;
+package test.scrapped;
 
 import main.com.pieisspy.tablefortress.model.components.Position;
 import main.com.pieisspy.tablefortress.model.enumerators.PieceType;
-
-public class Wall extends Piece{
+import main.com.pieisspy.tablefortress.model.pieces.Piece;
+/*
+public class Wall extends Piece {
     public Wall (Position pos) {
         super(null,null, pos);
-        setType(PieceType.Wall);
+        //setType(PieceType.Wall);
     }
 }
+
+ */

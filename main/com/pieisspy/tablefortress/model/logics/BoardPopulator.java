@@ -6,7 +6,7 @@ import main.com.pieisspy.tablefortress.model.enumerators.Owners;
 import main.com.pieisspy.tablefortress.model.pieces.*;
 
 public class BoardPopulator {
-    public void populateBoard(Board b) {
+    public static void populateBoard(Board b) {
         int i;
 
         for (i = 0; i < 6; i++)
@@ -16,7 +16,7 @@ public class BoardPopulator {
             placeRandomClayMonster(b);
     }
 
-    public void placeRandomToySoldier(Board b) {
+    public static void placeRandomToySoldier(Board b) {
         double x = Math.random();
         Position random;
         Piece piece;
@@ -32,8 +32,6 @@ public class BoardPopulator {
         else if (x > .3f)
             piece = new Soldier(random);
         else if (x > .1f)
-            piece = new Medic(random);
-        else if (x > .05f)
             piece = new Heavy(random);
         else
             piece = new Sniper(random);
@@ -43,7 +41,7 @@ public class BoardPopulator {
         b.insertPiece(piece);
     }
 
-    public void placeRandomClayMonster(Board b) {
+    public static void placeRandomClayMonster(Board b) {
         double x = Math.random();
         Position random;
         Piece piece;
@@ -60,8 +58,6 @@ public class BoardPopulator {
             piece = new Figure(random);
         else if (x > .1f)
             piece = new Crawler(random);
-        else if (x > .05f)
-            piece = new Volatile(random);
         else
             piece = new Brute(random);
 
@@ -70,7 +66,7 @@ public class BoardPopulator {
         b.insertPiece(piece);
     }
 
-    public Position randomizePosition(int maxRows, int maxCols) {
+    public static Position randomizePosition(int maxRows, int maxCols) {
         int row = (int)(Math.floor(Math.random() * maxRows));
         int col = (int)(Math.floor(Math.random() * maxCols));
 

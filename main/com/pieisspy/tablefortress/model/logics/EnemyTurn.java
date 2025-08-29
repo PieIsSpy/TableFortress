@@ -8,14 +8,12 @@ import main.com.pieisspy.tablefortress.model.pieces.Piece;
 import java.util.ArrayList;
 
 public class EnemyTurn extends PlayerTurn{
-    public Moves enemyDecision(Board b, Piece p) {
-        RangeChecker rangeChecker = new RangeChecker();
+    public static Moves enemyDecision(Board b, Piece p) {
         Piece nearestEnemy = seekNearestEnemy(b, p);
-        double x = Math.random();
         Position random;
 
         // if the piece can find a nearby piece and random > 50%
-        if (nearestEnemy != null && rangeChecker.hybridCheck(p.getPosition(), nearestEnemy.getPosition(), p.getStats().getAttackRange(), p.getAttackRangeType())) {
+        if (nearestEnemy != null && RangeChecker.hybridCheck(p.getPosition(), nearestEnemy.getPosition(), p.getAttackRange())) {
             attackMove(p, nearestEnemy);
             System.out.println(p + " attacked " + nearestEnemy);
             return Moves.Attack;
@@ -35,8 +33,7 @@ public class EnemyTurn extends PlayerTurn{
     /*
         for finding out which piece is in the attack area
      */
-    public Piece seekNearestEnemy(Board b, Piece p) {
-        RangeChecker rangeChecker = new RangeChecker();
+    public static Piece seekNearestEnemy(Board b, Piece p) {
         int nearestDistance = 999;
         Piece nearest = null;
         ArrayList<Piece> cooldowns = b.getCooldownHolder().getHolder();
@@ -44,18 +41,18 @@ public class EnemyTurn extends PlayerTurn{
 
         for (Piece found : cooldowns) {
             if (p != found && found.getOwner() != p.getOwner()) {
-                if (nearestDistance > rangeChecker.manhattanDistance(p.getPosition(), found.getPosition())) {
+                if (nearestDistance > RangeChecker.manhattanDistance(p.getPosition(), found.getPosition())) {
                     nearest = found;
-                    nearestDistance = rangeChecker.manhattanDistance(p.getPosition(), found.getPosition());
+                    nearestDistance = RangeChecker.manhattanDistance(p.getPosition(), found.getPosition());
                 }
             }
         }
 
         for (Piece found : turns) {
             if (p != found && found.getOwner() != p.getOwner()) {
-                if (nearestDistance > rangeChecker.manhattanDistance(p.getPosition(), found.getPosition())) {
+                if (nearestDistance > RangeChecker.manhattanDistance(p.getPosition(), found.getPosition())) {
                     nearest = found;
-                    nearestDistance = rangeChecker.manhattanDistance(p.getPosition(), found.getPosition());
+                    nearestDistance = RangeChecker.manhattanDistance(p.getPosition(), found.getPosition());
                 }
             }
         }
@@ -63,7 +60,7 @@ public class EnemyTurn extends PlayerTurn{
         return nearest;
     }
 
-    public Position randomizePosition(int maxRows, int maxCols) {
+    public static Position randomizePosition(int maxRows, int maxCols) {
         int row = (int)(Math.floor(Math.random() * maxRows));
         int col = (int)(Math.floor(Math.random() * maxCols));
 
