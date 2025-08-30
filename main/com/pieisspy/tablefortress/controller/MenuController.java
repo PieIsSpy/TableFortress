@@ -19,13 +19,8 @@ public class MenuController implements ActionListener {
         System.out.println(e.getActionCommand());
         if (e.getActionCommand().equalsIgnoreCase("start")) {
             model.createLevel();
-            /*
-            view.getGamePanel().getBoard().drawBoard(model.getLevel().getBoard().convertToTileMatrix(), null);
-            view.getGamePanel().drawQueueElements(model.getLevel().getBoard().convertToQueueInfo());
-
-             */
-            gameController.update();
             view.changePanel("game");
+            gameController.update();
         }
         else if (e.getActionCommand().equalsIgnoreCase("quit"))
             System.exit(0);

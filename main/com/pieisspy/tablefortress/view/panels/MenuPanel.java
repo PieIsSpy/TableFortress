@@ -15,6 +15,9 @@ public class MenuPanel extends JPanel {
     }
 
     public void init() {
+        start.setActionCommand("start");
+        quit.setActionCommand("quit");
+
         add(Box.createRigidArea(new Dimension(0, 100)));
         JLabel title = new JLabel("Table Fortress");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
