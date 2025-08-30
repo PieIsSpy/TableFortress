@@ -43,12 +43,6 @@ public class GameController implements ActionListener {
                 model.destroyLevel();
                 model.createLevel();
                 update();
-                /*
-                promptEnemyMove();
-                view.getGamePanel().getBoard().drawBoard(model.getLevel().getBoard().convertToTileMatrix(), null);
-                view.getGamePanel().drawQueueElements(model.getLevel().getBoard().convertToQueueInfo());
-
-                 */
             }
             else {
                 view.changePanel("menu");
@@ -118,9 +112,9 @@ public class GameController implements ActionListener {
                 move = Moves.Move;
             else if (event.getActionCommand().equalsIgnoreCase("attack"))
                 move = Moves.Attack;
-        }
 
-        updateGraphics();
+            updateGraphics();
+        }
     }
 
     private final Model model;

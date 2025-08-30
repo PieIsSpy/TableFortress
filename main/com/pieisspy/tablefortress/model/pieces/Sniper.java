@@ -9,9 +9,9 @@ import main.com.pieisspy.tablefortress.model.enumerators.RangeType;
 
 public class Sniper extends Piece{
     public Sniper (Position pos) {
-        super(new Stats(3, 8, 5), new Cooldown(2), pos);
+        super(new Stats(3, 7, 5), new Cooldown(5), pos);
         setType(PieceType.Sniper);
-        setAttackRange(new Range(RangeType.Linear, 6));
+        setAttackRange(new Range(RangeType.Linear, 8));
         setMovementRange(new Range(RangeType.Manhattan, 2));
     }
 }

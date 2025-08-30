@@ -9,9 +9,9 @@ import main.com.pieisspy.tablefortress.model.enumerators.RangeType;
 
 public class Spawn extends Piece{
     public Spawn (Position pos) {
-        super(new Stats(2, 4,2), new Cooldown(0), pos);
+        super(new Stats(2, 3,2), new Cooldown(2), pos);
         setType(PieceType.Spawn);
-        setAttackRange(new Range(RangeType.Manhattan, 1));
-        setMovementRange(new Range(RangeType.Manhattan, 2));
+        setAttackRange(new Range(RangeType.Manhattan, 3));
+        setMovementRange(new Range(RangeType.Manhattan, 3));
     }
 }

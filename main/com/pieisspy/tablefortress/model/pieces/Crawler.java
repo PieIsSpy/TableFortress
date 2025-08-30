@@ -9,9 +9,9 @@ import main.com.pieisspy.tablefortress.model.enumerators.RangeType;
 
 public class Crawler extends Piece{
     public Crawler (Position pos) {
-        super(new Stats(5, 3, 2), new Cooldown(0), pos);
+        super(new Stats(5, 3, 2), new Cooldown(1), pos);
         setType(PieceType.Crawler);
-        setAttackRange(new Range(RangeType.Linear, 1));
-        setMovementRange(new Range(RangeType.Linear, 6));
+        setAttackRange(new Range(RangeType.Linear, 3));
+        setMovementRange(new Range(RangeType.Linear, 5));
     }
 }

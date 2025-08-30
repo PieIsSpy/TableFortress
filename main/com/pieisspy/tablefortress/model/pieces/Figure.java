@@ -9,9 +9,9 @@ import main.com.pieisspy.tablefortress.model.enumerators.RangeType;
 
 public class Figure extends Piece{
     public Figure (Position pos) {
-        super(new Stats(6, 5,3), new Cooldown(1), pos);
+        super(new Stats(6, 5,3), new Cooldown(3), pos);
         setType(PieceType.Figure);
-        setAttackRange(new Range(RangeType.Manhattan, 3));
+        setAttackRange(new Range(RangeType.Square, 3));
         setMovementRange(new Range(RangeType.Manhattan, 4));
     }
 }

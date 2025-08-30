@@ -8,18 +8,12 @@ import main.com.pieisspy.tablefortress.model.pieces.*;
 public class BoardPopulator {
     public static void populateBoard(Board b) {
         int i;
-        b.insertPiece(new Scout(new Position(0,0)));
-        b.getPiece(new Position(0,0)).setOwner(Owners.Player);
-        b.insertPiece(new Spawn(new Position(11,1)));
-        b.getPiece(new Position(11,1)).setOwner(Owners.Enemy);
-        /*
+
         for (i = 0; i < 6; i++)
             placeRandomToySoldier(b);
 
         for (i = 0; i < 6; i++)
             placeRandomClayMonster(b);
-
-         */
     }
 
     public static void placeRandomToySoldier(Board b) {

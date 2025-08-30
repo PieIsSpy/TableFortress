@@ -9,9 +9,9 @@ import main.com.pieisspy.tablefortress.model.enumerators.RangeType;
 
 public class Scout extends Piece{
     public Scout (Position pos) {
-        super(new Stats(3, 2,1), new Cooldown(0), pos);
+        super(new Stats(3, 2,1), new Cooldown(1), pos);
         setType(PieceType.Scout);
-        setAttackRange(new Range(RangeType.Manhattan, 1));
+        setAttackRange(new Range(RangeType.Manhattan, 3));
         setMovementRange(new Range(RangeType.Manhattan, 6));
     }
 }

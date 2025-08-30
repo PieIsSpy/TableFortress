@@ -9,9 +9,9 @@ import main.com.pieisspy.tablefortress.model.enumerators.RangeType;
 
 public class Soldier extends Piece{
     public Soldier (Position pos) {
-        super(new Stats(6, 5, 3), new Cooldown(1), pos);
+        super(new Stats(6, 5, 3), new Cooldown(2), pos);
         setType(PieceType.Soldier);
         setAttackRange(new Range(RangeType.Manhattan, 3));
-        setMovementRange(new Range(RangeType.Manhattan, 5));
+        setMovementRange(new Range(RangeType.Manhattan, 4));
     }
 }
