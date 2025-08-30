@@ -15,12 +15,15 @@ public class TurnHandler {
     }
 
     public static void placeOnCooldown(PieceHolder turns, PieceHolder cooldown) {
-        Piece temp = turns.getHolder().getFirst();
+        Piece temp;
+        if (!turns.getHolder().isEmpty()) {
+            temp = turns.getHolder().getFirst();
 
-        if (temp != null && temp.getCooldown().getCooldown() > 0) {
-            turns.getHolder().removeFirst();
-            cooldown.getHolder().add(temp);
-            sortCooldown(cooldown);
+            if (temp.getCooldown().getCooldown() > 0) {
+                turns.getHolder().removeFirst();
+                cooldown.getHolder().add(temp);
+                sortCooldown(cooldown);
+            }
         }
     }
 
@@ -43,16 +46,11 @@ public class TurnHandler {
 
     public static void rotateTurns(PieceHolder turns) {
         Piece temp;
-        temp = turns.getHolder().getFirst();
 
-        if (temp != null) {
+        if (!turns.getHolder().isEmpty()) {
+            temp = turns.getHolder().getFirst();
             turns.getHolder().removeFirst();
             turns.getHolder().add(temp);
         }
-    }
-
-    public static void removeDeadPieces(PieceHolder turns, PieceHolder cooldown) {
-        turns.getHolder().removeIf(p -> !p.isAlive());
-        cooldown.getHolder().removeIf(p -> !p.isAlive());
     }
 }

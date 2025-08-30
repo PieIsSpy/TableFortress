@@ -12,7 +12,7 @@ public class EnemyTurn extends PlayerTurn{
         Piece nearestEnemy = seekNearestEnemy(b, p);
         Position random;
 
-        // if the piece can find a nearby piece and random > 50%
+        // if the piece can find a nearby piece
         if (nearestEnemy != null && RangeChecker.hybridCheck(p.getPosition(), nearestEnemy.getPosition(), p.getAttackRange())) {
             attackMove(p, nearestEnemy);
             System.out.println(p + " attacked " + nearestEnemy);
@@ -22,7 +22,7 @@ public class EnemyTurn extends PlayerTurn{
         else {
             do {
                 random = randomizePosition(b.getRows(), b.getCols());
-            } while (!b.isEmptyTile(random));
+            } while (!b.isEmptyTile(random) || !RangeChecker.hybridCheck(p.getPosition(), random, p.getMovementRange()));
 
             positionMove(b, p, random);
             System.out.println(p + " moved to " + random);

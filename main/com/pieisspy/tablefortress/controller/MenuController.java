@@ -7,9 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuController implements ActionListener {
-    public MenuController(Model m, View v) {
+    public MenuController(Model m, View v, GameController c) {
         model = m;
         view = v;
+        gameController = c;
         v.getMenuPanel().setActionListener(this);
     }
 
@@ -18,7 +19,12 @@ public class MenuController implements ActionListener {
         System.out.println(e.getActionCommand());
         if (e.getActionCommand().equalsIgnoreCase("start")) {
             model.createLevel();
+            /*
             view.getGamePanel().getBoard().drawBoard(model.getLevel().getBoard().convertToTileMatrix(), null);
+            view.getGamePanel().drawQueueElements(model.getLevel().getBoard().convertToQueueInfo());
+
+             */
+            gameController.update();
             view.changePanel("game");
         }
         else if (e.getActionCommand().equalsIgnoreCase("quit"))
@@ -28,4 +34,5 @@ public class MenuController implements ActionListener {
 
     private Model model;
     private View view;
+    private GameController gameController;
 }

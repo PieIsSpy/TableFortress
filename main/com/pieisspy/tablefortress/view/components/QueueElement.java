@@ -15,10 +15,41 @@ public class QueueElement extends JPanel {
         health.setValue(ch);
         cooldown = new JProgressBar(0, c.getCooldown());
         cooldown.setValue(c.getCounter());
+        init();
     }
 
     public void init() {
-        setPreferredSize(new Dimension(150,70));
+        setLayout(null);
+        setPreferredSize(new Dimension(170,70));
+        setMinimumSize(new Dimension(170,70));
+        setMaximumSize(new Dimension(170,70));
+
+        if (cooldown.getValue() == 0)
+            setBackground(new Color(0xFFFFA5));
+        else
+            setBackground(new Color(0x473D36));
+
+        JPanel spritePanel = new JPanel(new BorderLayout());
+        spritePanel.setBounds(10,10,50,50);
+        spritePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        add(spritePanel);
+
+        JLabel spriteHolder = new JLabel();
+        Image scaledImage = sprite.getScaledInstance(50,50,Image.SCALE_REPLICATE);
+        spriteHolder.setIcon(new ImageIcon(scaledImage));
+        spritePanel.add(spriteHolder, BorderLayout.CENTER);
+
+        health.setBounds(60,10,100,15);
+        health.setForeground(Color.RED);
+        health.setString("Health");
+        health.setStringPainted(true);
+        add(health);
+
+        cooldown.setBounds(60,25,100,15);
+        cooldown.setString("Cooldown");
+        cooldown.setForeground(new Color(0x7171FA));
+        cooldown.setStringPainted(true);
+        add(cooldown);
     }
 
     private BufferedImage sprite;

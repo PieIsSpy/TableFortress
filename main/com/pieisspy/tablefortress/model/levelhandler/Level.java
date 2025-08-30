@@ -63,7 +63,7 @@ public class Level {
     }
 
     public void postTurn() {
-        TurnHandler.removeDeadPieces(board.getTurns(), board.getCooldownHolder());
+        //TurnHandler.removeDeadPieces(board.getTurns(), board.getCooldownHolder());
         board.removeDeadPieces();
         TurnHandler.decrementCooldowns(board.getCooldownHolder());
         TurnHandler.removeCooldown(board.getTurns(), board.getCooldownHolder());

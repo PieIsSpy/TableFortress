@@ -84,6 +84,9 @@ public class Board {
             for (j = 0; j < COLS; j++)
                 if (TILES[i][j] != null && !TILES[i][j].isAlive())
                     TILES[i][j] = null;
+
+        TURNS.getHolder().removeIf(p -> !p.isAlive());
+        COOLDOWN_HOLDER.getHolder().removeIf(p -> !p.isAlive());
     }
 
     public Piece getPiece(Position pos) {
@@ -92,14 +95,19 @@ public class Board {
 
     public TileInfo[][] convertToTileMatrix() {
         TileInfo[][] temp = new TileInfo[ROWS][COLS];
-        Piece current = TURNS.getHolder().getFirst();
         int i, j;
+        Piece current;
         Piece tile;
         PieceType type;
         Position pos;
         boolean isAttackTile;
         boolean isMovementTile;
         boolean isCurrent;
+
+        if (!TURNS.getHolder().isEmpty())
+            current = TURNS.getHolder().getFirst();
+        else
+            current = null;
 
         for (i = 0; i < ROWS; i++) {
             for (j = 0; j < COLS; j++) {
@@ -114,11 +122,13 @@ public class Board {
                 if (TILES[i][j] != null)
                     type = tile.getType();
 
-                if (RangeChecker.hybridCheck(current.getPosition(), pos, current.getAttackRange()))
-                    isAttackTile = true;
+                if (current != null) {
+                    if (RangeChecker.hybridCheck(current.getPosition(), pos, current.getAttackRange()))
+                        isAttackTile = true;
 
-                if (RangeChecker.hybridCheck(current.getPosition(), pos, current.getMovementRange()))
-                    isMovementTile = true;
+                    if (RangeChecker.hybridCheck(current.getPosition(), pos, current.getMovementRange()))
+                        isMovementTile = true;
+                }
 
                 if (tile == current)
                     isCurrent = true;

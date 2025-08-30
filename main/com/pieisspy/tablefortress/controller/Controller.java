@@ -8,12 +8,8 @@ public class Controller {
         model = m;
         view = v;
 
-        menuController = new MenuController(model, view);
         gameController = new GameController(model, view);
-
-        model.createLevel();
-        view.getGamePanel().getBoard().drawBoard(model.getLevel().getBoard().convertToTileMatrix(), null);
-        view.changePanel("game");
+        menuController = new MenuController(model, view, gameController);
     }
 
     private Model model;

@@ -36,6 +36,7 @@ public class BoardGUI extends JPanel {
                 if (info[i][j].type() != null) {
                     Image scaledImage = ImageHandler.sprites.get(info[i][j].type().toString()).getScaledInstance(30,30,Image.SCALE_REPLICATE);
                     tiles[i][j].setIcon(new ImageIcon(scaledImage));
+                    tiles[i][j].setDisabledIcon(new ImageIcon(scaledImage));
                 }
                 else
                     tiles[i][j].setIcon(null);
@@ -55,28 +56,6 @@ public class BoardGUI extends JPanel {
                 }
             }
         }
-    }
-
-    public Moves promptOptions() {
-        Object[] options = {"Move", "Attack", "Cancel"};
-
-        int choice = JOptionPane.showOptionDialog(
-                null,
-                "What will this piece do?",
-                "Turn Options",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[2]
-        );
-
-        if (choice == 0)
-            return Moves.Move;
-        else if (choice == 1)
-            return Moves.Attack;
-        else
-            return null;
     }
 
     public void lockInput() {
