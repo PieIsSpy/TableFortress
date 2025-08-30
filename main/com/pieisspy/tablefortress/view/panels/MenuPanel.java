@@ -26,20 +26,20 @@ public class MenuPanel extends JPanel {
         buttons.setPreferredSize(new Dimension(100,150));
         buttons.setMaximumSize(new Dimension(100,150));
         buttons.add(start);
-        buttons.add(credits);
+        //buttons.add(credits);
         buttons.add(quit);
         add(buttons);
     }
 
     public void setActionListener(ActionListener listener) {
         start.addActionListener(listener);
-        credits.addActionListener(listener);
+        //credits.addActionListener(listener);
         quit.addActionListener(listener);
     }
 
     private final int WIDTH;
     private final int HEIGHT;
     private JButton start = new JButton("start");
-    private JButton credits = new JButton("credits");
+    //private JButton credits = new JButton("credits");
     private JButton quit = new JButton("quit");
 }
