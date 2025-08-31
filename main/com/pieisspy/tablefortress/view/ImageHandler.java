@@ -3,13 +3,43 @@ package main.com.pieisspy.tablefortress.view;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ImageHandler {
-    public static void initializeSprites(String path) {
+    public static void initializeSprites() {
+        try {
+            InputStream indexStream = ImageHandler.class.getClassLoader().getResourceAsStream("resources/images/index.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(indexStream));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String trimmed = line.trim();
+
+                if (!trimmed.isEmpty()) {
+                    InputStream imgStream = ImageHandler.class.getClassLoader().getResourceAsStream("resources/images/" + trimmed);
+                    if (imgStream != null) {
+                        BufferedImage img = ImageIO.read(imgStream);
+                        String key = trimmed.substring(0, trimmed.lastIndexOf('.'));
+                        sprites.put(key, img);
+                    }
+                }
+            }
+
+            System.out.println("Entries of hashmap");
+            for (Map.Entry<String, BufferedImage> entry : sprites.entrySet()) {
+                System.out.println("Key: " + entry.getKey());
+                System.out.println("Value: " + entry.getValue());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        /*
         String[] names = readNames(path);
         BufferedImage[] images = readFiles(path);
         int i;
@@ -26,6 +56,7 @@ public class ImageHandler {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        */
     }
 
     public static String[] readNames(String path) {

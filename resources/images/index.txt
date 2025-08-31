@@ -1,0 +1,8 @@
+Brute.png
+Crawler.png
+Figure.png
+Heavy.png
+Scout.png
+Sniper.png
+Soldier.png
+Spawn.png

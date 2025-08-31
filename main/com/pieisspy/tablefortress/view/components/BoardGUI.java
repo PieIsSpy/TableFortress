@@ -24,7 +24,7 @@ public class BoardGUI extends JPanel {
                 add(tiles[i][j]);
             }
         }
-        ImageHandler.initializeSprites("/resources/images");
+        ImageHandler.initializeSprites();
     }
 
     public void drawBoard(TileInfo[][] info, Moves moves) {
