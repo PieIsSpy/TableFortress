@@ -94,8 +94,11 @@ public class GameController implements ActionListener {
             Board board = model.getLevel().getBoard();
             System.out.println("(" + button.getRow() + ", " + button.getCol() + ")");
 
-            if (board.getPiece(new Position(row, col)) == piece)
+            if (board.getPiece(new Position(row, col)) == piece) {
                 move = view.getGamePanel().promptMoveOptions();
+                updateGraphics();
+                System.out.println(move);
+            }
             else if (move == Moves.Move && tileMatrix[row][col].type() == null && tileMatrix[row][col].isMovementTile()) {
                 model.getLevel().promptPlayerMove(piece, new Position(row, col));
                 move = null;
@@ -106,14 +109,6 @@ public class GameController implements ActionListener {
                 move = null;
                 update();
             }
-        }
-        else {
-            if (event.getActionCommand().equalsIgnoreCase("move"))
-                move = Moves.Move;
-            else if (event.getActionCommand().equalsIgnoreCase("attack"))
-                move = Moves.Attack;
-
-            updateGraphics();
         }
     }
 
